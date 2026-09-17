@@ -58,8 +58,9 @@ class Component extends DCLogic {
     window.addEventListener('keydown', this.onKey);
   }
   componentWillUnmount() { window.removeEventListener('resize', this.onResize); window.removeEventListener('keydown', this.onKey); }
-  componentDidUpdate(_, prev) {
-    if (this.state.open && !prev.open) setTimeout(() => this.firstRef.current && this.firstRef.current.focus(), 320);
+  componentDidUpdate() {
+    if (this.state.open && !this.__wasOpen) setTimeout(() => this.firstRef.current && this.firstRef.current.focus(), 320);
+    this.__wasOpen = this.state.open;
     document.body.style.overflow = this.state.open ? 'hidden' : '';
   }
   renderVals() {
