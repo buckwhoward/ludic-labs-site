@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Contact form delivery: set content to your Formspree form ID (e.g. "xabcdefg"). Empty = form shows a "not connected" notice. -->
+<meta name="form-endpoint" content="">
 <script src="/support.js"></script>
 </head>
 <body>
@@ -119,10 +121,17 @@ class Component extends DCLogic {
     };
     const services = this.svc.map(([id, name]) => { const on = sel.includes(id); return { id, name, checked: on, bg: on ? '#151515' : 'transparent', fg: on ? '#F4F1E9' : '#151515', toggle: () => this.setState(s => ({ sel: on ? s.sel.filter(x => x !== id) : s.sel.concat(id), status: null })) }; });
     const filled = [v.name, v.email, sel.length, v.description.trim().length >= 20].filter(Boolean).length;
-    const isErr = status === 'error';
+    const isErr = status === 'error' || status === 'failed';
+    const copy = {
+      error: 'A few fields need attention before we can send this. They’re marked above.',
+      sending: 'Sending…',
+      sent: 'Thanks — your message is on its way. We read everything and will reply within two business days.',
+      failed: 'Something went wrong on our end and the message didn’t send. Please try again in a moment.',
+      pending: 'Thanks for writing this out. The form isn’t connected to a delivery service yet, so nothing has been sent. Once the inquiry endpoint is configured, submissions will land in the Ludic Labs inbox and you’ll see a confirmation here.'
+    };
     return {
-      v, e, services, sending: false, showStatus: !!status,
-      statusText: isErr ? 'A few fields need attention before we can send this. They’re marked above.' : 'Thanks for writing this out. The form isn’t connected to a delivery service yet, so nothing has been sent. Once the inquiry endpoint is configured, submissions will land in the Ludic Labs inbox and you’ll see a confirmation here.',
+      v, e, services, sending: this.state.sending, showStatus: !!status,
+      statusText: copy[status] || '',
       statusBorder: isErr ? '#8a1f11' : '#151515', statusBg: isErr ? 'rgba(138,31,17,.06)' : '#DFFF00', statusDot: isErr ? '#8a1f11' : '#151515',
       dotT: `translate(${(filled - 2) * 8}px, ${(2 - filled) * 8}px)`,
       onName: this.set('name'), onEmail: this.set('email'), onCompany: this.set('company'), onDesc: this.set('description'), onBudget: this.set('budget'), onTimeline: this.set('timeline'),
@@ -137,7 +146,22 @@ class Component extends DCLogic {
           el && el.focus && el.focus();
           return;
         }
-        this.setState({ submitted: true, status: 'pending' });
+        const meta = document.querySelector('meta[name="form-endpoint"]');
+        const id = meta && meta.getAttribute('content').trim();
+        if (!id) { this.setState({ submitted: true, status: 'pending' }); return; }
+        if (this.state.sending) return;
+        const { v, sel } = this.state;
+        const payload = {
+          name: v.name.trim(), email: v.email.trim(), company: v.company.trim(),
+          services: this.svc.filter(s => sel.includes(s[0])).map(s => s[1]).join(', '),
+          description: v.description.trim(), budget: v.budget, timeline: v.timeline,
+          _subject: 'New inquiry from ' + v.name.trim() + ' — theludiclabs.com', _replyto: v.email.trim()
+        };
+        this.setState({ submitted: true, status: 'sending', sending: true });
+        fetch('https://formspree.io/f/' + id, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) })
+          .then(r => r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)))
+          .then(() => this.setState({ status: 'sent', sending: false, v: { name: '', email: '', company: '', description: '', budget: '', timeline: '' }, sel: [], touched: {}, submitted: false }))
+          .catch(() => this.setState({ status: 'failed', sending: false }));
       }
     };
   }
