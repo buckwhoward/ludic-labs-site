@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="/support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Figtree:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}:focus-visible{outline:2px solid #DFFF00;outline-offset:3px}@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}</style>
+</helmet>
+<header role="banner" style="position:sticky;top:0;z-index:50;font-family:Figtree,Helvetica,Arial,sans-serif;color:#151515">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;height:68px;padding:0 clamp(20px,4vw,56px);background:rgba(244,241,233,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(21,21,21,.1)">
+    <a href="/" aria-label="Ludic Labs — home" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#151515">
+      <svg viewBox="0 0 100 100" width="30" height="30" aria-hidden="true"><path d="M8 8H32V68H60V92H20L8 80Z" fill="#151515"></path><path d="M92 92H68V32H40V8H92Z" fill="#151515"></path><circle cx="50" cy="50" r="9" fill="#DFFF00"></circle></svg>
+      <span style="font-family:Syne,Helvetica,sans-serif;font-weight:800;font-size:19px;letter-spacing:-0.04em;line-height:1">Ludic Labs</span>
+    </a>
+    <sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}">
+      <nav aria-label="Primary" style="display:flex;align-items:center;gap:36px">
+        <sc-for list="{{ links }}" as="l" hint-placeholder-count="2">
+          <a href="{{ l.href }}" aria-current="{{ l.current }}" style="position:relative;display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;text-decoration:none;color:#151515;padding:6px 0" style-hover="color:#151515;text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px">
+            <span aria-hidden="true" style="width:7px;height:7px;background:#DFFF00;outline:1px solid #151515;opacity:{{ l.dot }}"></span>{{ l.label }}
+          </a>
+        </sc-for>
+        <a href="/contact" style="display:inline-flex;align-items:center;height:42px;padding:0 20px;background:#151515;color:#F4F1E9;font-size:17px;font-weight:600;text-decoration:none;transition:background .2s,color .2s,transform .2s" style-hover="background:#DFFF00;color:#151515" style-active="transform:scale(.97)">Let’s Talk</a>
+      </nav>
+    </sc-if>
+    <sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}">
+      <button type="button" onClick="{{ toggle }}" aria-expanded="{{ open }}" aria-controls="ll-mobile-menu" aria-label="{{ menuLabel }}" style="display:flex;flex-direction:column;justify-content:center;gap:6px;width:48px;height:48px;padding:0 10px;border:0;background:transparent;cursor:pointer">
+        <span aria-hidden="true" style="display:block;height:2px;background:#151515;transition:transform .25s;transform:{{ bar1 }}"></span>
+        <span aria-hidden="true" style="display:block;height:2px;background:#151515;transition:transform .25s;transform:{{ bar2 }}"></span>
+      </button>
+    </sc-if>
+  </div>
+  <div id="ll-mobile-menu" role="dialog" aria-modal="true" aria-label="Menu" style="position:fixed;inset:68px 0 0 0;background:#151515;color:#F4F1E9;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(28px,6vw,48px) clamp(20px,6vw,48px) 40px;transition:opacity .3s cubic-bezier(.2,.8,.2,1),transform .35s cubic-bezier(.2,.8,.2,1),visibility .3s;opacity:{{ menuOpacity }};transform:{{ menuTransform }};visibility:{{ menuVisibility }}">
+    <nav aria-label="Mobile" style="display:flex;flex-direction:column;gap:4px">
+      <sc-for list="{{ links }}" as="l" hint-placeholder-count="2">
+        <a href="{{ l.href }}" onClick="{{ close }}" ref="{{ l.ref }}" style="display:flex;align-items:baseline;gap:16px;padding:14px 0;border-bottom:1px solid rgba(244,241,233,.14);font-family:Syne,Helvetica,sans-serif;font-weight:800;font-size:clamp(36px,9vw,56px);letter-spacing:-0.04em;line-height:1;text-decoration:none;color:#F4F1E9;transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .35s;transition-delay:{{ l.delay }};opacity:{{ itemOpacity }};transform:{{ itemTransform }}"><span style="font-family:'Geist Mono',ui-monospace,monospace;font-size:15px;letter-spacing:.08em;color:#B9BAB4;font-weight:400">{{ l.index }}</span>{{ l.label }}</a>
+      </sc-for>
+    </nav>
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <a href="/contact" onClick="{{ close }}" style="display:flex;align-items:center;justify-content:center;height:60px;background:#DFFF00;color:#151515;font-weight:600;font-size:17px;text-decoration:none">Let’s Talk</a>
+    </div>
+  </div>
+</header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;120px&quot;},&quot;current&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;&quot;,&quot;options&quot;:[&quot;&quot;,&quot;Work&quot;,&quot;Services&quot;,&quot;About&quot;],&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { open: false, width: typeof window !== 'undefined' ? window.innerWidth : 1200 };
+  firstRef = React.createRef();
+  componentDidMount() {
+    this.onResize = () => this.setState({ width: window.innerWidth });
+    this.onKey = (e) => { if (e.key === 'Escape' && this.state.open) this.setState({ open: false }); };
+    window.addEventListener('resize', this.onResize);
+    window.addEventListener('keydown', this.onKey);
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); window.removeEventListener('keydown', this.onKey); }
+  componentDidUpdate(_, prev) {
+    if (this.state.open && !prev.open) setTimeout(() => this.firstRef.current && this.firstRef.current.focus(), 320);
+    document.body.style.overflow = this.state.open ? 'hidden' : '';
+  }
+  renderVals() {
+    const cur = this.props.current || '';
+    const mobile = this.state.width < 820;
+    const open = mobile && this.state.open;
+    const base = [['Services', '/services'], ['About', '/about']];
+    const links = base.map(([label, href], i) => ({ label, href, index: '0' + (i + 1), current: cur === label ? 'page' : undefined, dot: cur === label ? 1 : 0, delay: (60 + i * 60) + 'ms', ref: i === 0 ? this.firstRef : undefined }));
+    return {
+      links, desktop: !mobile, mobile, open,
+      menuLabel: open ? 'Close menu' : 'Open menu',
+      toggle: () => this.setState(s => ({ open: !s.open })),
+      close: () => this.setState({ open: false }),
+      bar1: open ? 'translateY(4px) rotate(45deg)' : 'none',
+      bar2: open ? 'translateY(-4px) rotate(-45deg)' : 'none',
+      menuOpacity: open ? 1 : 0, menuTransform: open ? 'none' : 'translateY(-12px)', menuVisibility: open ? 'visible' : 'hidden',
+      itemOpacity: open ? 1 : 0, itemTransform: open ? 'none' : 'translateY(18px)',
+    };
+  }
+}
+</script>
+</body>
+</html>

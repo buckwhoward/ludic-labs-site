@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="/support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Let’s Talk — Ludic Labs</title>
+<meta name="description" content="Start a conversation with Ludic Labs. Tell us what you’re building, what needs to change, or the idea you can’t stop thinking about.">
+<link rel="canonical" href="https://theludiclabs.com/contact">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Let’s Talk — Ludic Labs">
+<meta property="og:image" content="https://theludiclabs.com/assets/og-image.svg">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Figtree:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#F4F1E9;color:#151515;-webkit-font-smoothing:antialiased}a{color:#151515}a:hover{color:#151515}:focus-visible{outline:2px solid #DFFF00;outline-offset:3px}input:focus,textarea:focus,select:focus{outline:2px solid #151515;outline-offset:2px}@keyframes ll-rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}</style>
+</helmet>
+<div style="font-family:Figtree,Helvetica,Arial,sans-serif;color:#151515;background:#F4F1E9">
+<dc-import name="Site Header" hint-size="100%,68px"></dc-import>
+<main id="main" style="padding:clamp(48px,7vw,104px) clamp(20px,4vw,56px) clamp(72px,10vw,150px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(32px,5vw,72px);align-items:start">
+  <div style="display:flex;flex-direction:column;gap:24px;position:sticky;top:96px">
+    <span style="font-family:'Geist Mono',ui-monospace,monospace;font-size:15px;letter-spacing:.1em;text-transform:uppercase;color:#5b5a55;animation:ll-rise .6s ease both">Let’s talk</span>
+    <h1 style="margin:0;font-family:Syne,Helvetica,sans-serif;font-weight:800;font-size:clamp(44px,6.6vw,112px);line-height:.94;letter-spacing:-0.045em;text-wrap:balance;animation:ll-rise .8s cubic-bezier(.2,.8,.2,1) both .1s">What could we make happen?</h1>
+    <p style="margin:0;max-width:480px;font-size:clamp(18px,1.4vw,20px);line-height:1.5;color:#3a3935;text-wrap:pretty;animation:ll-rise .8s cubic-bezier(.2,.8,.2,1) both .2s">Tell us what you’re building, what needs to change, or the idea you can’t stop thinking about. A few lines is plenty; we’ll ask the rest.</p>
+    <div aria-hidden="true" style="position:relative;width:120px;height:120px;margin-top:16px;container-type:inline-size;animation:ll-rise .8s cubic-bezier(.2,.8,.2,1) both .3s">
+      <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible" aria-hidden="true"><g style="transform-box:view-box;transform-origin:50px 50px;transition:transform .5s cubic-bezier(.2,.8,.2,1);transform:none"><path d="M8 8H32V68H60V92H20L8 80Z" fill="#151515"></path></g><g style="transform-box:view-box;transform-origin:50px 50px;transition:transform .5s cubic-bezier(.2,.8,.2,1);transform:none"><path d="M92 92H68V32H40V8H92Z" fill="#151515"></path></g><circle cx="50" cy="50" r="9" fill="#DFFF00" style="transform-box:view-box;transform-origin:50px 50px;transition:transform .5s cubic-bezier(.2,.8,.2,1);transform:{{ dotT }}"></circle></svg>
+    </div>
+  </div>
+
+  <form noValidate onSubmit="{{ submit }}" aria-describedby="form-note" style="display:flex;flex-direction:column;gap:28px;max-width:640px;animation:ll-rise .8s cubic-bezier(.2,.8,.2,1) both .25s">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:24px">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label for="f-name" style="font-size:16px;font-weight:600">Name <span aria-hidden="true" style="color:#5b5a55;font-weight:400">· required</span></label>
+        <input id="f-name" name="name" type="text" autoComplete="name" required value="{{ v.name }}" onChange="{{ onName }}" onBlur="{{ blurName }}" aria-invalid="{{ e.nameInvalid }}" aria-describedby="f-name-err" style="height:52px;padding:0 14px;border:1.5px solid {{ e.nameBorder }};background:#fff;font:inherit;font-size:18px;color:#151515;border-radius:0">
+        <span id="f-name-err" role="alert" style="min-height:18px;font-size:15px;color:#8a1f11">{{ e.name }}</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label for="f-email" style="font-size:16px;font-weight:600">Email <span aria-hidden="true" style="color:#5b5a55;font-weight:400">· required</span></label>
+        <input id="f-email" name="email" type="email" autoComplete="email" required value="{{ v.email }}" onChange="{{ onEmail }}" onBlur="{{ blurEmail }}" aria-invalid="{{ e.emailInvalid }}" aria-describedby="f-email-err" style="height:52px;padding:0 14px;border:1.5px solid {{ e.emailBorder }};background:#fff;font:inherit;font-size:18px;color:#151515;border-radius:0">
+        <span id="f-email-err" role="alert" style="min-height:18px;font-size:15px;color:#8a1f11">{{ e.email }}</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <label for="f-company" style="font-size:16px;font-weight:600">Company <span style="color:#5b5a55;font-weight:400">· optional</span></label>
+      <input id="f-company" name="company" type="text" autoComplete="organization" value="{{ v.company }}" onChange="{{ onCompany }}" style="height:52px;padding:0 14px;border:1.5px solid #B9BAB4;background:#fff;font:inherit;font-size:18px;color:#151515;border-radius:0">
+    </div>
+    <fieldset style="margin:0;padding:0;border:0;display:flex;flex-direction:column;gap:12px" aria-describedby="f-svc-err">
+      <legend style="font-size:16px;font-weight:600;padding:0;margin-bottom:4px">Services of interest <span aria-hidden="true" style="color:#5b5a55;font-weight:400">· choose at least one</span></legend>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ services }}" as="s" hint-placeholder-count="6">
+          <label style="display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 14px;border:1.5px solid #151515;cursor:pointer;user-select:none;font-size:17px;font-weight:500;transition:background .2s,color .2s;background:{{ s.bg }};color:{{ s.fg }}">
+            <input type="checkbox" name="services" value="{{ s.id }}" checked="{{ s.checked }}" onChange="{{ s.toggle }}" style="width:16px;height:16px;margin:0;accent-color:#151515">{{ s.name }}
+          </label>
+        </sc-for>
+      </div>
+      <span id="f-svc-err" role="alert" style="min-height:18px;font-size:15px;color:#8a1f11">{{ e.services }}</span>
+    </fieldset>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <label for="f-desc" style="font-size:16px;font-weight:600">Project description <span aria-hidden="true" style="color:#5b5a55;font-weight:400">· required</span></label>
+      <textarea id="f-desc" name="description" rows="6" required value="{{ v.description }}" onChange="{{ onDesc }}" onBlur="{{ blurDesc }}" aria-invalid="{{ e.descInvalid }}" aria-describedby="f-desc-err f-desc-hint" style="padding:14px;border:1.5px solid {{ e.descBorder }};background:#fff;font:inherit;font-size:18px;line-height:1.5;color:#151515;resize:vertical;border-radius:0"></textarea>
+      <span id="f-desc-hint" style="font-size:15px;color:#5b5a55">What you’re working on, what’s in the way, and what a good outcome looks like.</span>
+      <span id="f-desc-err" role="alert" style="min-height:18px;font-size:15px;color:#8a1f11">{{ e.description }}</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:24px">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label for="f-budget" style="font-size:16px;font-weight:600">Budget range <span style="color:#5b5a55;font-weight:400">· optional</span></label>
+        <select id="f-budget" name="budget" value="{{ v.budget }}" onChange="{{ onBudget }}" style="height:52px;padding:0 14px;border:1.5px solid #B9BAB4;background:#fff;font:inherit;font-size:18px;color:#151515;border-radius:0">
+          <option value="">Prefer not to say yet</option><option value="lt10">Under $10k</option><option value="10-25">$10k – $25k</option><option value="25-50">$25k – $50k</option><option value="50-100">$50k – $100k</option><option value="gt100">$100k+</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label for="f-timeline" style="font-size:16px;font-weight:600">Timeline <span style="color:#5b5a55;font-weight:400">· optional</span></label>
+        <select id="f-timeline" name="timeline" value="{{ v.timeline }}" onChange="{{ onTimeline }}" style="height:52px;padding:0 14px;border:1.5px solid #B9BAB4;background:#fff;font:inherit;font-size:18px;color:#151515;border-radius:0">
+          <option value="">Not fixed</option><option value="asap">As soon as possible</option><option value="1-3">In the next 1–3 months</option><option value="3-6">In 3–6 months</option><option value="exploring">Just exploring</option>
+        </select>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <button type="submit" aria-disabled="{{ sending }}" style="display:inline-flex;width:fit-content;align-items:center;gap:12px;height:60px;padding:0 30px;border:0;background:#151515;color:#F4F1E9;font:inherit;font-weight:600;font-size:17px;cursor:pointer;transition:background .2s,color .2s,transform .2s" style-hover="background:#DFFF00;color:#151515" style-active="transform:scale(.97)">Start a Conversation<span aria-hidden="true">→</span></button>
+      <sc-if value="{{ showStatus }}" hint-placeholder-val="{{ false }}">
+        <div role="status" aria-live="polite" style="display:flex;gap:14px;padding:18px 20px;border:1.5px solid {{ statusBorder }};background:{{ statusBg }};font-size:17px;line-height:1.5;text-wrap:pretty"><span aria-hidden="true" style="flex:none;margin-top:6px;width:10px;height:10px;background:{{ statusDot }}"></span><span>{{ statusText }}</span></div>
+      </sc-if>
+      <p id="form-note" style="margin:0;font-family:'Geist Mono',ui-monospace,monospace;font-size:15px;line-height:1.6;letter-spacing:.02em;color:#5b5a55">We reply to every genuine inquiry. Your details are used only to respond to you.</p>
+    </div>
+  </form>
+</main>
+<dc-import name="Site Footer" hint-size="100%,600px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  svc = [['strategy', 'Strategy & Brand'], ['paid-media', 'Paid Media'], ['email', 'Email & Retention'], ['photo-video', 'Photo & Video'], ['seo', 'SEO & Content'], ['web', 'Web & Digital']];
+  state = { v: { name: '', email: '', company: '', description: '', budget: '', timeline: '' }, sel: [], touched: {}, submitted: false, status: null, sending: false };
+  componentDidMount() {
+    const q = new URLSearchParams(window.location.search).get('service');
+    if (q && this.svc.some(s => s[0] === q)) this.setState({ sel: [q] });
+  }
+  set(k) { return (e) => { const val = e.target.value; this.setState(s => ({ v: Object.assign({}, s.v, { [k]: val }), status: null })); }; }
+  blur(k) { return () => this.setState(s => ({ touched: Object.assign({}, s.touched, { [k]: true }) })); }
+  errors() {
+    const { v, sel } = this.state, e = {};
+    if (!v.name.trim()) e.name = 'Please tell us your name.';
+    if (!v.email.trim()) e.email = 'We need an email address to reply to.';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.email)) e.email = 'That email address doesn’t look complete.';
+    if (!sel.length) e.services = 'Pick at least one service, even if you’re not sure yet.';
+    if (v.description.trim().length < 20) e.description = 'A sentence or two helps us reply usefully (20 characters minimum).';
+    return e;
+  }
+  renderVals() {
+    const { v, sel, touched, submitted, status } = this.state;
+    const all = this.errors();
+    const show = (k) => (submitted || touched[k]) ? (all[k] || '') : '';
+    const e = {
+      name: show('name'), email: show('email'), description: show('description'), services: submitted ? (all.services || '') : '',
+      nameInvalid: !!show('name'), emailInvalid: !!show('email'), descInvalid: !!show('description'),
+      nameBorder: show('name') ? '#8a1f11' : '#B9BAB4', emailBorder: show('email') ? '#8a1f11' : '#B9BAB4', descBorder: show('description') ? '#8a1f11' : '#B9BAB4'
+    };
+    const services = this.svc.map(([id, name]) => { const on = sel.includes(id); return { id, name, checked: on, bg: on ? '#151515' : 'transparent', fg: on ? '#F4F1E9' : '#151515', toggle: () => this.setState(s => ({ sel: on ? s.sel.filter(x => x !== id) : s.sel.concat(id), status: null })) }; });
+    const filled = [v.name, v.email, sel.length, v.description.trim().length >= 20].filter(Boolean).length;
+    const isErr = status === 'error';
+    return {
+      v, e, services, sending: false, showStatus: !!status,
+      statusText: isErr ? 'A few fields need attention before we can send this. They’re marked above.' : 'Thanks for writing this out. The form isn’t connected to a delivery service yet, so nothing has been sent. Once the inquiry endpoint is configured, submissions will land in the Ludic Labs inbox and you’ll see a confirmation here.',
+      statusBorder: isErr ? '#8a1f11' : '#151515', statusBg: isErr ? 'rgba(138,31,17,.06)' : '#DFFF00', statusDot: isErr ? '#8a1f11' : '#151515',
+      dotT: `translate(${(filled - 2) * 8}px, ${(2 - filled) * 8}px)`,
+      onName: this.set('name'), onEmail: this.set('email'), onCompany: this.set('company'), onDesc: this.set('description'), onBudget: this.set('budget'), onTimeline: this.set('timeline'),
+      blurName: this.blur('name'), blurEmail: this.blur('email'), blurDesc: this.blur('description'),
+      submit: (ev) => {
+        ev.preventDefault();
+        const errs = this.errors();
+        if (Object.keys(errs).length) {
+          this.setState({ submitted: true, status: 'error' });
+          const first = ['name', 'email', 'services', 'description'].find(k => errs[k]);
+          const el = document.getElementById(first === 'services' ? 'f-svc-err' : first === 'description' ? 'f-desc' : 'f-' + first);
+          el && el.focus && el.focus();
+          return;
+        }
+        this.setState({ submitted: true, status: 'pending' });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
